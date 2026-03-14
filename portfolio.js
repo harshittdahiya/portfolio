@@ -119,8 +119,8 @@
       }
     });
   }, {
-    threshold: 0.35,
-    rootMargin: `-${72}px 0px -40% 0px`  // offset for fixed nav
+    threshold: [0.25, 0.45, 0.65],
+    rootMargin: `-${72}px 0px -35% 0px`  // offset for fixed nav
   });
 
   sections.forEach(({ el }) => observer.observe(el));

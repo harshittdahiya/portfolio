@@ -388,6 +388,15 @@ button { cursor: none; }
   box-shadow: 0 0 32px var(--glow);
   transform: translateY(-2px);
 }
+.btn-primary:disabled,
+.btn-primary.loading {
+  cursor: not-allowed;
+  opacity: 0.75;
+  background: #0f4d69;
+  border-color: #0f4d69;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transform: none;
+}
 .btn-ghost {
   background: transparent;
   color: var(--text-dim);
@@ -796,6 +805,21 @@ button { cursor: none; }
   background: rgba(0,210,255,0.06);
 }
 
+.cert-preview-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  margin-bottom: 12px;
+}
+.cert-preview {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(90%);
+}
+
 .card-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -990,36 +1014,68 @@ button { cursor: none; }
 /* =====================================================
    RESPONSIVE
    ===================================================== */
-@media (max-width: 960px) {
-  .hero-code-block { display: none; }
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .about-visual { flex-direction: row; align-items: center; gap: 32px; }
-  .avatar-wrapper { width: 140px; height: 140px; }
-  .avatar-initials { font-size: 2rem; }
+html, body { overflow-x: hidden; }
+
+@media (max-width: 1024px) {
+  .container { padding: 0 24px; }
+  .hero { padding: calc(var(--nav-h) + 30px) 24px 60px; }
+  .hero-content { max-width: 100%; }
+  .about-grid, .contact-grid, .projects-grid, .skills-grid { gap: 24px; }
+
+  .nav-links { gap: 2px; }
+  .nav-link { padding: 8px 14px; }
+
+  .project-card, .skill-category, .contact-item, .contact-form { min-width: 0; }
+  .form-row { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 0 20px; }
-  .hero { padding: calc(var(--nav-h) + 24px) 20px 60px; }
+  body { overflow-x: hidden; }
+
+  .container { padding: 0 18px; }
+  .hero { padding: calc(var(--nav-h) + 20px) 16px 40px; }
+  .hero-content { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-text { width: 100%; max-width: 680px; }
+  .hero-photo { position: static; margin: 26px auto 0; width: 220px; height: 220px; }
+  .hero-name { font-size: clamp(2rem, 9vw, 3.2rem); line-height: 1.1; }
+
+  .section { padding: 64px 0; }
+  .section-title { margin-bottom: 24px; }
+
+  .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .projects-grid { gap: 20px; }
 
   .nav-links { display: none; }
   .hamburger { display: flex; }
 
-  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-  .form-row { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .skills-grid { grid-template-columns: 1fr; }
+  .menu-open + .mobile-menu { display: block; }
 
-  .about-visual { flex-direction: column; align-items: center; }
-  .about-stats { gap: 32px; }
+  .project-card, .contact-item, .skill-category, .about-visual, .about-text { width: 100%; }
+  .card-title { font-size: 1.15rem; }
+  .card-desc { font-size: 0.9rem; }
 
-  .section { padding: 72px 0; }
-  .section-title { margin-bottom: 40px; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .btn { width: 100%; justify-content: center; }
+  .hero-bio { font-size: 0.96rem; }
 }
 
 @media (max-width: 480px) {
-  .hero-cta { flex-direction: column; align-items: center; }
-  .btn { width: 100%; max-width: 280px; justify-content: center; }
-  .about-stats { gap: 20px; }
-  .stat-num { font-size: 1.4rem; }
+  .container { padding: 0 12px; }
+  .hero { padding: calc(var(--nav-h) + 16px) 12px 30px; }
+  .hero-name { font-size: clamp(2rem, 11vw, 2.7rem); }
+  .hero-bio { font-size: 0.94rem; }
+  .section { padding: 56px 0; }
+
+  .contact-intro { font-size: 0.95rem; }
+  .project-card, .contact-item, .skill-category { padding: 20px; }
+  .card-title { font-size: 1.1rem; }
+  .card-desc { font-size: 0.88rem; }
+  .skills-grid, .projects-grid, .contact-grid, .about-grid { gap: 18px; }
+  .form-group input, .form-group textarea { font-size: 0.9rem; }
+  .footer { padding: 24px; }
 }
+
+/* keep existing final responsive rules intact for fallback */
