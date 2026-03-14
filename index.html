@@ -381,30 +381,38 @@
         </div>
 
         <!-- Right: Form -->
-        <form class="contact-form" id="contactForm" data-animate action="https://formsubmit.co/harshit.dahiya679@gmail.com" method="POST">
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="https://formsubmit.co/success" />
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">Name</label>
-              <input type="text" id="fname" name="name" placeholder="Your name" />
-            </div>
-            <div class="form-group">
-              <label for="femail">Email</label>
-              <input type="email" id="femail" name="email" placeholder="your@email.com" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="fsubject">Subject</label>
-            <input type="text" id="fsubject" name="subject" placeholder="What's this about?" />
-          </div>
-          <div class="form-group">
-            <label for="fmsg">Message</label>
-            <textarea id="fmsg" name="message" rows="5" placeholder="Tell me about your project..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-          <p id="contactStatus" class="contact-status" aria-live="polite"></p>
-        </form>
+        <form class="contact-form"
+      action="https://formsubmit.co/harshit.dahiya679@gmail.com"
+      method="POST">
+
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://harshit-chaudhary-three.vercel.app">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="fname">Name</label>
+      <input type="text" id="fname" name="name" placeholder="Your name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="femail">Email</label>
+      <input type="email" id="femail" name="email" placeholder="your@email.com" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="fsubject">Subject</label>
+    <input type="text" id="fsubject" name="subject" placeholder="What's this about?">
+  </div>
+
+  <div class="form-group">
+    <label for="fmsg">Message</label>
+    <textarea id="fmsg" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+  </div>
+
+  <button type="submit">Send Message</button>
+
+</form>
       </div>
     </div>
   </section>

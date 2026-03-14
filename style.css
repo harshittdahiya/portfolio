@@ -951,7 +951,7 @@ button { cursor: none; }
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-muted); }
-..form-group input:focus,
+.form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 16px rgba(0,210,255,0.1);
