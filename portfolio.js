@@ -201,29 +201,27 @@
 })();
 
 
-/* ── 7. CONTACT FORM (basic feedback) ── */
+/* ── 7. CONTACT FORM (send message via FormSubmit) ── */
 (function initContactForm() {
   const form = document.getElementById('contactForm');
-  if (!form) return;
+  const statusEl = document.getElementById('contactStatus');
+  if (!form || !statusEl) return;
+
+  function setStatus(message, type = 'info') {
+    statusEl.textContent = message;
+    statusEl.className = `contact-status ${type}`;
+  }
 
   form.addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Message Sent! ✓';
-    btn.style.background = '#22c55e';
-    btn.style.boxShadow  = '0 0 20px rgba(34,197,94,0.4)';
-    btn.style.borderColor = '#22c55e';
-    btn.disabled = true;
-
-    // Reset after 3s
-    setTimeout(() => {
-      btn.textContent = 'Send Message';
-      btn.style.background = '';
-      btn.style.boxShadow  = '';
-      btn.style.borderColor = '';
-      btn.disabled = false;
-      form.reset();
-    }, 3000);
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const message = document.getElementById('fmsg').value.trim();
+    if (!name || !email || !message) {
+      e.preventDefault();
+      setStatus('Please enter your name, email, and message.', 'error');
+      return;
+    }
+    setStatus('Sending your message…', 'info');
   });
 })();
 

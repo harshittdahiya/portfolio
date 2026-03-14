@@ -401,6 +401,27 @@ button { cursor: none; }
 }
 .btn-full { width: 100%; }
 
+.btn-primary.loading {
+  pointer-events: none;
+  opacity: 0.9;
+  position: relative;
+}
+.btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: #fff;
+  border-radius: 50%;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin { 0% { transform: translateY(-50%) rotate(0deg);} 100% { transform: translateY(-50%) rotate(360deg);} }
+
 .hero-cta {
   display: flex;
   gap: 16px;
@@ -930,11 +951,24 @@ button { cursor: none; }
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-muted); }
-.form-group input:focus,
+..form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 16px rgba(0,210,255,0.1);
 }
+
+.contact-status {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  min-height: 1.2rem;
+  margin-top: -8px;
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+.contact-status.success { color: #22c55e; }
+.contact-status.error { color: #f87171; }
+.contact-status.info { color: #93c5fd; }
 
 /* =====================================================
    FOOTER
