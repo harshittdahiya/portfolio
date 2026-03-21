@@ -6,8 +6,10 @@
 (function initCursor() {
   const dot  = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
+  const glow = document.getElementById('cursorGlow');
   let mx = -100, my = -100; // start off-screen
   let rx = -100, ry = -100;
+  let gx = -100, gy = -100;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX;
@@ -26,6 +28,16 @@
   }
   animateRing();
 
+  // Smooth glow follow
+  function animateGlow() {
+    gx += (mx - gx) * 0.08;
+    gy += (my - gy) * 0.08;
+    glow.style.left = gx + 'px';
+    glow.style.top  = gy + 'px';
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+
   // Grow ring on hover over interactive elements
   document.querySelectorAll('a, button, .skill-pill, .project-card, .contact-item, input, textarea')
     .forEach(el => {
@@ -34,12 +46,37 @@
     });
 
   // Hide on leave, show on enter
-  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+  document.addEventListener('mouseleave', () => { 
+    dot.style.opacity = '0'; 
+    ring.style.opacity = '0'; 
+    glow.style.opacity = '0'; 
+  });
+  document.addEventListener('mouseenter', () => { 
+    dot.style.opacity = '1'; 
+    ring.style.opacity = '1'; 
+    glow.style.opacity = '1'; 
+  });
 })();
 
 
-/* ── 2. NAVBAR SCROLL STATE ── */
+/* ── 2. FLOATING PARTICLES ── */
+(function initParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 50;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.width = particle.style.height = Math.random() * 4 + 2 + 'px';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    particlesContainer.appendChild(particle);
+  }
+})();
+
+
+/* ── 3. NAVBAR SCROLL STATE ── */
 (function initNavScroll() {
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -48,7 +85,164 @@
 })();
 
 
-/* ── 3. HAMBURGER MENU ── */
+/* ── 4. COUNT-UP ANIMATION ── */
+(function initCountUp() {
+  const stats = document.querySelectorAll('.stat-num');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = parseInt(entry.target.dataset.target);
+        let count = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+          count += increment;
+          if (count >= target) {
+            entry.target.textContent = target + '+';
+            clearInterval(timer);
+          } else {
+            entry.target.textContent = Math.floor(count) + '+';
+          }
+        }, 30);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  stats.forEach(stat => observer.observe(stat));
+})();
+
+
+/* ── 5. MAGNETIC BUTTONS ── */
+(function initMagneticButtons() {
+  const buttons = document.querySelectorAll('.magnetic');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+})();
+
+
+/* ── 6. IMAGE GLOW FOLLOW ── */
+(function initImageGlow() {
+  const imageGlow = document.getElementById('imageGlow');
+  const heroPhoto = document.querySelector('.hero-photo');
+
+  heroPhoto.addEventListener('mousemove', e => {
+    const rect = heroPhoto.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    imageGlow.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+  });
+
+  heroPhoto.addEventListener('mouseleave', () => {
+    imageGlow.style.transform = '';
+  });
+})();
+
+
+/* ── 7. SKILL TAGS ANIMATION ── */
+(function initSkillTags() {
+  const skillPills = document.querySelectorAll('.skill-pill');
+  skillPills.forEach((pill, index) => {
+    pill.style.animationDelay = (index * 0.1) + 's';
+    pill.classList.add('fade-in-up');
+  });
+})();
+
+
+/* ── 8. CERTIFICATE SHINE ── */
+(function initCertShine() {
+  const certImages = document.querySelectorAll('.cert-preview');
+  certImages.forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      img.style.animation = 'shine 1.5s ease-in-out';
+    });
+    img.addEventListener('mouseleave', () => {
+      img.style.animation = '';
+    });
+  });
+})();
+
+
+/* ── 9. PROJECT ICONS ANIMATION ── */
+(function initProjectIcons() {
+  const icons = document.querySelectorAll('.card-link svg');
+  icons.forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      icon.style.animation = 'bounce 0.6s ease';
+    });
+    icon.addEventListener('mouseleave', () => {
+      icon.style.animation = '';
+    });
+  });
+})();
+
+
+/* ── 10. TECH TAGS GLOW ── */
+(function initTechGlow() {
+  const tags = document.querySelectorAll('.tech-tag');
+  tags.forEach(tag => {
+    tag.addEventListener('mouseenter', () => {
+      tag.style.boxShadow = '0 0 15px rgba(0,210,255,0.5)';
+    });
+    tag.addEventListener('mouseleave', () => {
+      tag.style.boxShadow = '';
+    });
+  });
+})();
+
+
+/* ── 11. EDUCATION TIMELINE ── */
+(function initEducationTimeline() {
+  const educationSection = document.getElementById('education');
+  const cards = educationSection.querySelectorAll('.project-card');
+
+  cards.forEach((card, index) => {
+    if (index < cards.length - 1) {
+      const connector = document.createElement('div');
+      connector.className = 'timeline-connector';
+      connector.style.position = 'absolute';
+      connector.style.left = '50%';
+      connector.style.top = '100%';
+      connector.style.width = '2px';
+      connector.style.height = '40px';
+      connector.style.background = 'linear-gradient(to bottom, var(--accent), transparent)';
+      connector.style.transform = 'translateX(-50%)';
+      card.style.position = 'relative';
+      card.appendChild(connector);
+    }
+  });
+})();
+
+
+/* ── 12. SCROLL REVEAL ENHANCED ── */
+(function initScrollReveal() {
+  const elements = document.querySelectorAll('[data-animate]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('in-view');
+        }, idx * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  elements.forEach(el => observer.observe(el));
+})();
+
+
+/* ── 13. HAMBURGER MENU ── */
 (function initHamburger() {
   const btn       = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -147,33 +341,59 @@
 })();
 
 
-/* ── 5. TYPING ANIMATION (runs once, no loop) ── */
+/* ── 5. TYPING ANIMATION (loops through roles) ── */
 (function initTyping() {
   const textEl   = document.getElementById('typingText');
   const cursorEl = document.getElementById('typingCursor');
-  const text     = 'Full Stack Developer';
-  let i = 0;
-  let started = false;
+  const roles = [
+    "Full Stack Developer",
+    "MERN Stack Developer",
+    "AI-Powered App Developer",
+    "Problem Solver",
+    "Tech Innovator"
+  ];
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isTyping = true;
+  let isPaused = false;
 
   function typeChar() {
-    if (i < text.length) {
-      textEl.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeChar, 90 + Math.random() * 40); // slightly random speed
+    if (isPaused) return;
+
+    const currentRole = roles[roleIndex];
+
+    if (isTyping) {
+      if (charIndex < currentRole.length) {
+        textEl.textContent += currentRole.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeChar, 90); // typing speed: ~90ms per char
+      } else {
+        // Finished typing, pause
+        isPaused = true;
+        setTimeout(() => {
+          isPaused = false;
+          isTyping = false;
+          typeChar();
+        }, 1200); // pause after typing: 1.2s
+      }
     } else {
-      // Done — hide blinking cursor after a pause
-      setTimeout(() => {
-        cursorEl.style.display = 'none';
-      }, 1800);
+      // Backspacing
+      if (charIndex > 0) {
+        textEl.textContent = textEl.textContent.slice(0, -1);
+        charIndex--;
+        setTimeout(typeChar, 50); // backspace speed: faster, 50ms
+      } else {
+        // Finished backspacing, move to next role
+        isTyping = true;
+        roleIndex = (roleIndex + 1) % roles.length;
+        setTimeout(typeChar, 200); // small delay before next typing
+      }
     }
   }
 
   // Start after a short delay (lets hero fade-in finish)
   setTimeout(() => {
-    if (!started) {
-      started = true;
-      typeChar();
-    }
+    typeChar();
   }, 700);
 })();
 
@@ -226,7 +446,41 @@
 })();
 
 
-/* ── 8. SMOOTH SCROLL for anchor links ── */
+/* ── 8. 3D TILT EFFECT ── */
+(function initTiltEffect() {
+  const cards = document.querySelectorAll('.project-card, .skill-category');
+
+  cards.forEach(card => {
+    let isHovering = false;
+
+    card.addEventListener('mouseenter', () => {
+      isHovering = true;
+    });
+
+    card.addEventListener('mousemove', e => {
+      if (!isHovering) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -8; // max 8 deg
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      isHovering = false;
+      card.style.transform = '';
+    });
+  });
+})();
+
+
+/* ── 9. SMOOTH SCROLL for anchor links ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const href = a.getAttribute('href');
@@ -240,3 +494,29 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+
+/* ── 10. OCCASIONAL GLITCH EFFECT ── */
+(function initOccasionalGlitch() {
+  const glitchText = document.querySelector('.glitch-text');
+  if (!glitchText) return;
+
+  function triggerGlitch() {
+    glitchText.classList.add('glitch-active');
+    setTimeout(() => {
+      glitchText.classList.remove('glitch-active');
+    }, 300);
+  }
+
+  // Trigger glitch randomly every 8-15 seconds
+  function scheduleNextGlitch() {
+    const delay = 8000 + Math.random() * 7000; // 8-15 seconds
+    setTimeout(() => {
+      triggerGlitch();
+      scheduleNextGlitch();
+    }, delay);
+  }
+
+  // Start the cycle
+  scheduleNextGlitch();
+})();

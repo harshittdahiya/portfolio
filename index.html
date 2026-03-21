@@ -16,6 +16,10 @@
   <!-- ========== CURSOR ========== -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ========== FLOATING PARTICLES ========== -->
+  <div class="floating-particles" id="particles"></div>
 
   <!-- ========== NAVBAR ========== -->
   <nav class="navbar" id="navbar">
@@ -27,7 +31,7 @@
         <a href="#about"    class="nav-link" data-section="about">About</a>
         <a href="#education" class="nav-link" data-section="education">Education</a>
         <a href="#skills"   class="nav-link" data-section="skills">Skills</a>
-        <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+        <a href="#certificates" class="nav-link" data-section="certificates">Certificates</a>
         <a href="#projects" class="nav-link" data-section="projects">Projects</a>
         <a href="#contact"  class="nav-link" data-section="contact">Contact</a>
         <!-- sliding highlight pill -->
@@ -46,7 +50,7 @@
     <a href="#about"    class="mob-link">About</a>
     <a href="#education" class="mob-link">Education</a>
     <a href="#skills"   class="mob-link">Skills</a>
-    <a href="#certifications" class="mob-link">Certifications</a>
+    <a href="#certificates" class="mob-link">Certificates</a>
     <a href="#projects" class="mob-link">Projects</a>
     <a href="#contact"  class="mob-link">Contact</a>
   </div>
@@ -60,12 +64,12 @@
     <div class="orb orb-2"></div>
 
     <div class="hero-content">
-      <div class="hero-text">
+      <div class="hero-text hero-text-entry">
         <p class="hero-greeting">Hey, I'm</p>
-        <h1 class="hero-name">Harshit<br /><span class="name-accent">Chaudhary</span></h1>
+        <h1 class="hero-name hero-name-entry">Harshit<br /><span class="name-accent gradient-text">Chaudhary</span></h1>
         <div class="hero-role">
           <span class="role-bracket">&lt;</span>
-          <span class="typing-text" id="typingText"></span>
+          <span class="typing-text glitch-text" id="typingText"></span>
           <span class="cursor-blink" id="typingCursor">|</span>
           <span class="role-bracket">/&gt;</span>
         </div>
@@ -74,8 +78,8 @@
           thoughtful UX, and a passion for elegant solutions.
         </p>
         <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">View My Work</a>
-          <a href="Harshit_CV.pdf" class="btn btn-ghost" download="Harshit_CV.pdf">Download Resume</a>
+          <a href="#projects" class="btn btn-primary magnetic">View My Work</a>
+          <a href="Harshit_CV.pdf" class="btn btn-ghost magnetic" download="Harshit_CV.pdf">Download Resume</a>
         </div>
         <div class="hero-socials">
           <a href="https://github.com/harshittdahiya" target="_blank" class="social-icon" aria-label="GitHub">
@@ -88,9 +92,10 @@
           </a>
         </div>
       </div>
-      <div class="hero-photo">
+      <div class="hero-photo hero-photo-entry">
         <!-- profile image replaces previous avatar rings -->
         <img src="New.jpg" alt="Profile photo" class="hero-img" />
+        <div class="image-glow" id="imageGlow"></div>
       </div>
     </div>
 
@@ -115,15 +120,15 @@
           <!-- Stats -->
           <div class="about-stats">
             <div class="stat-item">
-              <span class="stat-num">3+</span>
+              <span class="stat-num" data-target="3">0</span>
               <span class="stat-label">Projects</span>
             </div>
             <div class="stat-item">
-              <span class="stat-num">2+</span>
+              <span class="stat-num" data-target="2">0</span>
               <span class="stat-label">Yrs Learning</span>
             </div>
             <div class="stat-item">
-              <span class="stat-num">10+</span>
+              <span class="stat-num" data-target="10">0</span>
               <span class="stat-label">Technologies</span>
             </div>
           </div>
@@ -208,7 +213,7 @@
   <!-- ========== SKILLS ========== -->
   <section id="skills" class="skills section">
     <div class="container">
-      <div class="section-label">03 — Skills</div>
+      <div class="section-label">04 — Skills</div>
       <h2 class="section-title">What I Work With</h2>
 
       <div class="skills-grid">
@@ -279,11 +284,11 @@
     </div>
   </section>
 
-  <!-- ========== CERTIFICATIONS ========== -->
-  <section id="certifications" class="certifications section">
+  <!-- ========== CERTIFICATES ========== -->
+  <section id="certificates" class="certificates section">
     <div class="container">
-      <div class="section-label">04 — Certifications</div>
-      <h2 class="section-title">My Certifications</h2>
+      <div class="section-label">03 — Certificates</div>
+      <h2 class="section-title">My Certificates</h2>
       <div class="projects-grid">
         <article class="project-card" data-animate>
           <div class="card-top">
@@ -342,7 +347,8 @@
       <div class="projects-grid">
 
         <!-- Project 1 -->
-        <article class="project-card" data-animate>
+        <article class="project-card featured-card" data-animate>
+          <div class="featured-badge">Featured</div>
           <div class="card-top">
             <div class="card-number">01</div>
             <div class="card-links">
@@ -386,20 +392,22 @@
               </a>
             </div>
           </div>
-          <h3 class="card-title">Job Portal Website</h3>
+          <h3 class="card-title">AI Coding Assistant Platform</h3>
           <p class="card-desc">
-            A robust job marketplace where employers post listings and candidates manage
-            applications — with resume uploads and full tracking system.
+            An intelligent web-based assistant that helps users understand, debug, and write code efficiently using AI.
           </p>
           <ul class="card-features">
-            <li>Employer job posting dashboard</li>
-            <li>Resume upload &amp; application tracking</li>
-            <li>Searchable job listings</li>
+            <li>Real-time code explanation and query handling using NLP-based AI</li>
+            <li>Automated debugging with syntax error detection and smart fix suggestions</li>
+            <li>Interactive chat interface for seamless conversational coding support</li>
+            <li>Simplifies complex programming concepts for beginners with clear explanations</li>
+            <li>Integrated with Google Gemini API for intelligent responses and assistance</li>
           </ul>
           <div class="card-tech">
-            <span class="tech-tag">PHP</span>
-            <span class="tech-tag">Bootstrap</span>
-            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Google Gemini API</span>
+            <span class="tech-tag">NLP</span>
           </div>
         </article>
 
